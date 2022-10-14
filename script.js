@@ -93,16 +93,15 @@ document.getElementById("validateCNP").onclick = function() {
 
     let cCNP = codnumeric.split("");
     
-    console.log(cCNP);
-    console.log(cValidate);
+   
     
-    console.log(validateLast(cCNP, cValidate) % 11);
 
     if( comp !== (validateLast(cCNP, cValidate) % 11)) {
         alert("CNP invalid");
     }
 
-/*
+    /*
+    
     for ( let i = 0; i <= 12; i++ ) {
         n = n + cCNP[i]*cValidate[i];
     }
@@ -111,8 +110,10 @@ document.getElementById("validateCNP").onclick = function() {
         alert("CNP invalid");
     }
 
-*/
 
+    console.log(validateLast(cCNP, cValidate) % 11);
+    console.log(cCNP);
+    console.log(cValidate);
     console.log(typeof codnumeric);
     console.log(codnumeric);
     console.log(sex);
@@ -121,7 +122,8 @@ document.getElementById("validateCNP").onclick = function() {
     console.log(zi);
     console.log(judet); 
     console.log(judete[judet-1]);
-    //console.log(c);
+    
+    */
 
     document.getElementById("result").innerHTML = JSON.stringify(date);
 
