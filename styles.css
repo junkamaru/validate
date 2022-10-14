@@ -1,0 +1,26 @@
+/*body {
+    background-color: blueviolet;
+}
+
+form {
+    align-items: center; 
+    text-align: center;
+    padding-top: 10%;
+    font-size: 50px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+#CNPinput {
+    border-style: dashed;
+}
+
+input {
+    border: 2px solid currentcolor;
+  }
+  input:invalid {
+    border: 2px dashed red;
+  }
+  input:invalid:focus {
+    background: red;
+  }
+  */

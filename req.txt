@@ -1,0 +1,17 @@
+1. Implementeaza un serviciu in Java “validateCNP”, care primeste un CNP.
+ Daca CNP-ul este valid, se returneaza in format Json sexul, data nasterii 
+ (zi, luna, an) si judetul. Daca CNP-ul este invalid se returneaza un cod
+  de eroare 456 cu mesajul “CNP Invalid”
+2. Implementeaza un serviciu in Java “generateCNP”, care primeste ca 
+parametrii: sex, zi nastere, luna nastere, an nastere, judet; si returneaza
+ un CNP valid generat random, considerand datele de intrare. Daca unul 
+ dintre parametrii lipseste, se va genera random acea valoare
+  (spre exemplu daca luna nastere lipseste, CNP-ul generat poate 
+  contine orice luna din an). Pentru a aloca un nume random pentru 
+  fiecare CNP, vor exista doua array-uri (nume, prenume) cu nume 
+  predefinite, din fiecare array se va alege o valoare random pentru 
+  nume si prenume. Daca vreunul dintre parametrii este invalid 
+  (spre exemplu luna 13) se va returna o eroare.
+3. Toate CNP-urile generate apeland serviciul de la punctul 2. vor fi 
+salvate intr-o baza de date pe server, expune un serviciu Java 
+“getGeneratedCNP”, care va returna toate datele salvate in DB.
