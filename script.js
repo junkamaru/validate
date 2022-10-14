@@ -35,6 +35,11 @@ document.getElementById("validateCNP").onclick = function() {
     
     var codnumeric = document.getElementById("inputCNP").value;
     
+    if(/^\d+$/.test(codnumeric) === 0) {
+        alert("CNP invalid");
+        
+    };
+
     let sex = parseInt(codnumeric.slice(0, 1));
     
     if(sex == 0){
