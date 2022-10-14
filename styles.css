@@ -1,10 +1,9 @@
 body {
-    background-color: blueviolet;
+    background-color: rgb(127, 255, 212);
     align-items: center; 
     text-align: center;
     padding-top: 10%;
-    
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 #idCNP {
@@ -29,6 +28,4 @@ input {
     background: red;
   }
 
-  #result {
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
-  }
+  
