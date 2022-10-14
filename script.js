@@ -74,6 +74,7 @@ document.getElementById("validateCNP").onclick = function() {
     }
     
     date.luna = luna;
+    
     if(an % 400 == 0 || (an % 100 != 0 && an % 4 == 0)){
         zileLuna[1] = 29;
     }
