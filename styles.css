@@ -7,12 +7,17 @@ body {
 }
 
 #idCNP {
-  font-size: 50px;
+  font-size: 40px;
 }
 
 form {
-    
+  justify-content: left;
 }
+
+/* #generare {
+  align-content: ;
+  display: grid;
+} */
 
 #inputCNP {
     border-style: dashed;

@@ -31,9 +31,20 @@ function validateLast(x, y) {
     return n;
 }
 
+/*
+function validateSex( x ) {
+    if(x == 0){
+        alert("CNP invalid");
+    }
+    else if(x % 2 == 0) {
+        date.sex = "F";
+    }
+    else date.sex = "M";
+}
+*/
 document.getElementById("validateCNP").onclick = function() {
     
-    var codnumeric = document.getElementById("inputCNP").value;
+    let codnumeric = document.getElementById("inputCNP").value;
     
     if(/^\d+$/.test(codnumeric) === 0) {
         alert("CNP invalid");
@@ -42,6 +53,8 @@ document.getElementById("validateCNP").onclick = function() {
 
     let sex = parseInt(codnumeric.slice(0, 1));
     
+    //validateSex( sex );
+
     if(sex == 0){
         alert("CNP invalid");
     }
@@ -50,6 +63,7 @@ document.getElementById("validateCNP").onclick = function() {
     }
     else date.sex = "M";
     
+
     //date.sex = sex;
     
     let an = parseInt(codnumeric.slice(1, 3));
@@ -99,39 +113,85 @@ document.getElementById("validateCNP").onclick = function() {
 
     let cCNP = codnumeric.split("");
     
-   
-    
-
     if( comp !== (validateLast(cCNP, cValidate) % 11)) {
         alert("CNP invalid");
     }
 
-    /*
-    
-    for ( let i = 0; i <= 12; i++ ) {
-        n = n + cCNP[i]*cValidate[i];
-    }
-
-    if( comp !== (n % 11)) {
-        alert("CNP invalid");
-    }
-
-
-    console.log(validateLast(cCNP, cValidate) % 11);
-    console.log(cCNP);
-    console.log(cValidate);
-    console.log(typeof codnumeric);
-    console.log(codnumeric);
-    console.log(sex);
-    console.log(an);
-    console.log(luna);
-    console.log(zi);
-    console.log(judet); 
-    console.log(judete[judet-1]);
-    
-    */
-
     document.getElementById("result").innerHTML = JSON.stringify(date);
 
-    
 }
+
+document.getElementById("clear").onclick = function() {
+    document.getElementById("result").innerHTML = "";
+}
+
+let generatedCNP = [];
+
+document.getElementById("generateCNP").onclick = function() {
+        
+    let CNP = {
+        sex: document.getElementById("gen").value,
+        an: document.getElementById("anulN").value,
+        luna: document.getElementById("luna").value,
+        zi: document.getElementById("ziua").value,
+        judet: document.getElementById("judet").value,
+        }
+
+    generatedCNP.push(CNP);
+    console.log(CNP);
+
+    localStorage.setItem("CNP-uri", JSON.stringify(generatedCNP));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// document.getElementById("generateCNP").onclick = function generateCNP() {
+//     let CNP = {
+//         sex: document.getElementById("gen").value,
+//         an: document.getElementById("anulN").value,
+//         luna: document.getElementById("luna").value,
+//         zi: document.getElementById("ziua").value,
+//         judet: document.getElementById("judet").value,
+//     }
+//     console.log(CNP);
+//     console.log("salut")
+//     //document.getElementById("generateCNP").addEventListener('click',);
+// }
+
+// document.getElementById("generateCNP").onclick = function() {
+//     console.log("salut")
+// }
+
