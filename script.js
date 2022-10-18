@@ -31,7 +31,6 @@ function validateLast(x, y) {
     return n;
 }
 
-/*
 function validateSex( x ) {
     if(x == 0){
         alert("CNP invalid");
@@ -41,42 +40,64 @@ function validateSex( x ) {
     }
     else date.sex = "M";
 }
-*/
+
+function validateForLetters( x ) {
+    if(/^\d+$/.test(x) === 0) {
+        alert("CNP invalid");
+        
+    };
+}
+
+function validateAn(x, y) {
+    if (x == 1 || x == 2) {
+        y += 1900;
+    }
+    else if (x == 3 || x == 4) {
+        y += 1800;
+    } 
+    else {
+        y += 2000;
+    }
+
+    return y;
+}
+
 document.getElementById("validateCNP").onclick = function() {
     
     let codnumeric = document.getElementById("inputCNP").value;
     
-    if(/^\d+$/.test(codnumeric) === 0) {
-        alert("CNP invalid");
+    validateForLetters( codnumeric );
+
+    // if(/^\d+$/.test(codnumeric) === 0) {
+    //     alert("CNP invalid");
         
-    };
+    // };
 
     let sex = parseInt(codnumeric.slice(0, 1));
     
-    //validateSex( sex );
+    validateSex( sex );
 
-    if(sex == 0){
-        alert("CNP invalid");
-    }
-    else if(sex % 2 == 0) {
-        date.sex = "F";
-    }
-    else date.sex = "M";
-    
-
-    //date.sex = sex;
+    // if(sex == 0){
+    //     alert("CNP invalid");
+    // }
+    // else if(sex % 2 == 0) {
+    //     date.sex = "F";
+    // }
+    // else date.sex = "M";
     
     let an = parseInt(codnumeric.slice(1, 3));
     
-    if (sex == 1 || sex == 2) {
-        an += 1900;
-    }
-    else if (sex == 3 || sex == 4) {
-        an += 1800;
-    } 
-    else {
-        an += 2000;
-    }
+    validateAn(sex, an);
+
+    // if (sex == 1 || sex == 2) {
+    //     an += 1900;
+    // }
+    // else if (sex == 3 || sex == 4) {
+    //     an += 1800;
+    // } 
+    // else {
+    //     an += 2000;
+    // }
     
     date.an = an;
     
@@ -134,10 +155,40 @@ document.getElementById("generateCNP").onclick = function() {
         an: document.getElementById("anulN").value,
         luna: document.getElementById("luna").value,
         zi: document.getElementById("ziua").value,
-        judet: document.getElementById("judet").value,
+        judet: document.getElementById("judet").value,};
+    
+        if ( CNP.an > 1800 && CNP.an < 1900) {
+            CNP.an -= 1800;
+            if(CNP.sex == "M" || CNP.sex == "m" || CNP.sex == "Masculin") {
+                CNP.sex = 3;
+            }
+            else CNP.sex = 4;
         }
+        else if ( CNP.an > 1900 && CNP.an < 2000 ) {
+            CNP.an -= 1900;
+            if(CNP.sex == "M" || CNP.sex == "m" || CNP.sex == "Masculin") {
+                CNP.sex = 1;
+            }
+            else CNP.sex = 2;
+        } 
+        else  if(CNP.sex == "M" || CNP.sex == "m" || CNP.sex == "Masculin") {
+            CNP.sex = 5;
+        }
+        else CNP.sex = 6;
 
+        // if(CNP.sex == "M" || CNP.sex == "m" || CNP.sex == "Masculin") {
+        //     CNP.sex = 1;
+        // }
+
+    
     generatedCNP.push(CNP);
+    
+
+    
+    
+    
+    
+    
     console.log(CNP);
 
     localStorage.setItem("CNP-uri", JSON.stringify(generatedCNP));
