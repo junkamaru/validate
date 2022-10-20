@@ -20,6 +20,8 @@ const date = {
     judet: "",
 };
 
+////////////////////////////////////////////////////////////////////////
+
 function validateLast(x, y) {
     
     let n = 0;
@@ -47,20 +49,7 @@ function validateForLetters( x ) {
         
     };
 }
-
-function validateAn(x, y) {
-    if (x == 1 || x == 2) {
-        y += 1900;
-    }
-    else if (x == 3 || x == 4) {
-        y += 1800;
-    } 
-    else {
-        y += 2000;
-    }
-
-    return y;
-}
+////////////////////////////////////////////////////////////////////////
 
 document.getElementById("validateCNP").onclick = function() {
     
@@ -87,17 +76,17 @@ document.getElementById("validateCNP").onclick = function() {
     
     let an = parseInt(codnumeric.slice(1, 3));
     
-    validateAn(sex, an);
+    
 
-    // if (sex == 1 || sex == 2) {
-    //     an += 1900;
-    // }
-    // else if (sex == 3 || sex == 4) {
-    //     an += 1800;
-    // } 
-    // else {
-    //     an += 2000;
-    // }
+    if (sex == 1 || sex == 2) {
+        an += 1900;
+    }
+    else if (sex == 3 || sex == 4) {
+        an += 1800;
+    } 
+    else {
+        an += 2000;
+    }
     
     date.an = an;
     
@@ -140,6 +129,8 @@ document.getElementById("validateCNP").onclick = function() {
 
     document.getElementById("result").innerHTML = JSON.stringify(date);
 
+    console.log(judete.length);
+
 }
 
 document.getElementById("clear").onclick = function() {
@@ -148,50 +139,127 @@ document.getElementById("clear").onclick = function() {
 
 let generatedCNP = [];
 
+
+function generateCNP( a, b, c, d, e, f) {
+    
+    let newCNP = "";
+
+    if ( a > 1800 && a < 1900) {
+        a -= 1800;
+        if(b == "M") {
+            b = 3;
+        }
+        else if(b == "F") {
+            b = 4;
+        };
+    }
+    else if ( a > 1900 && a < 2000 ) {
+        a -= 1900;
+        if(b == "M") {
+            b = 1;
+        }
+        else if (a == "F") {
+            a = 2;
+        }
+    } 
+    else  if(a == "M") {
+            a = 5;
+    }
+    else if(a = "F") {
+        a = 6;
+    }
+    else if(a == "") {
+        a = Math.floor(Math.random() * 6) + 1;
+    }
+    else alert("CNP invalid");
+
+    newCNP.concat(a, b);
+
+    if (c > 0 && c < 13) {
+        newCNP.concat(c);
+    }
+    else if( c == "") {
+        c = Math.floor(Math.random() * 12) + 1;
+        newCNP.concat(c);
+    }
+    else alert("CNP invalid");
+
+    if (d > 0 && d < zileLuna[c-1]) {
+        newCNP.concat(d);
+    }
+    else if ( d == "" ) {
+        d = Math.floor(Math.random() * zileLuna[c-1]) + 1;
+    }
+    else alert("CNP invalid");
+
+    
+    
+    if (f.contains(e)) {
+        for( let i = 0; i <= f.length; i++) {
+            if ( e == judete[i]) {
+                e = i + 1;
+
+            }
+        }
+    }
+    else alert("CNP invalid");
+
+    
+    return newCNP;
+
+};
+
+
 document.getElementById("generateCNP").onclick = function() {
         
-    let CNP = {
-        sex: document.getElementById("gen").value,
-        an: document.getElementById("anulN").value,
-        luna: document.getElementById("luna").value,
-        zi: document.getElementById("ziua").value,
-        judet: document.getElementById("judet").value,};
-    
-        if ( CNP.an > 1800 && CNP.an < 1900) {
-            CNP.an -= 1800;
-            if(CNP.sex == "M" || CNP.sex == "m" || CNP.sex == "Masculin") {
-                CNP.sex = 3;
-            }
-            else CNP.sex = 4;
-        }
-        else if ( CNP.an > 1900 && CNP.an < 2000 ) {
-            CNP.an -= 1900;
-            if(CNP.sex == "M" || CNP.sex == "m" || CNP.sex == "Masculin") {
-                CNP.sex = 1;
-            }
-            else CNP.sex = 2;
-        } 
-        else  if(CNP.sex == "M" || CNP.sex == "m" || CNP.sex == "Masculin") {
-            CNP.sex = 5;
-        }
-        else CNP.sex = 6;
+let CNP = {
+    sex: document.getElementById("gen").value,
+    an: document.getElementById("anulN").value,
+    luna: document.getElementById("luna").value,
+    zi: document.getElementById("ziua").value,
+    judet: document.getElementById("judet").value,
+    generated: "",
+};
 
-        // if(CNP.sex == "M" || CNP.sex == "m" || CNP.sex == "Masculin") {
-        //     CNP.sex = 1;
-        // }
+let finalCNP = generateCNP(CNP.sex, CNP.an, CNP.luna, CNP.zi, CNP.judet, judete);
 
-    
-    generatedCNP.push(CNP);
-    
 
-    
-    
-    
-    
-    
-    console.log(CNP);
 
-    localStorage.setItem("CNP-uri", JSON.stringify(generatedCNP));
+
+//    
+// if ( CNP.an > 1800 && CNP.an < 1900) {
+//     CNP.an -= 1800;
+//     if(CNP.sex == "M") {
+//         CNP.sex = 3;
+//     }
+//     else if(CNP.sex == "F") {
+//         CNP.sex = 4;
+//     };
+// }
+// else if ( CNP.an > 1900 && CNP.an < 2000 ) {
+//     CNP.an -= 1900;
+//     if(CNP.sex == "M") {
+//         CNP.sex = 1;
+//     }
+//     else if (CNP.sex == "F") {
+//         CNP.sex = 2;
+//     }
+// } 
+// else  if(CNP.sex == "M") {
+//         CNP.sex = 5;
+// }
+// else if(CNP.sex = "F") {
+//     CNP.sex = 6;
+// };
+
+
+
+generatedCNP.push(CNP);
+console.log(CNP);
+console.log(finalCNP);
+localStorage.setItem("CNP-uri", JSON.stringify(generatedCNP));
+
+
 }
 
 
