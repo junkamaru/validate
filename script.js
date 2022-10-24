@@ -10,6 +10,10 @@ const county = ["Alba", "Arad", "Arges", "Bacau", "Bihor", "Bistrita-Nasaud",
 const cValidate = [2, 7, 9, 1, 4, 6, 3, 5, 8, 2, 7, 9];
 const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
+let CNParray = [];
+
+localStorage.setItem("CNP-uri", JSON.stringify(CNParray));
+
 // const date = {
 //     sex: "",
 //     year: "",
@@ -37,8 +41,9 @@ function checkLast(CNP, con) {
     for ( let i = 0; i <= 11; i++ ) 
          n = n + CNP[i] * con[i];
     
-
-    return n % 11;
+    if (n % 11 == 10)
+    return 1;
+    else return n % 11;
 }; //return n % 11
 
 //return year + 2000
@@ -163,7 +168,7 @@ function generateRandomSex() {
     else return "F";
 }
 function generateRandomInputs(min, max) {
-    return (Math.floor(Math.random() * (max - min + 1)) + min).toString;
+    return (Math.floor(Math.random() * (max - min + 1)) + min);
 }
 // generates random values
 
@@ -205,6 +210,7 @@ function checkAndCreateRandomValues(sex, year, month, day, user_county) {
     }
 
     if(year ==  "") {
+        
         year += generateRandomInputs(1900, 2022);
     }
 
@@ -244,6 +250,14 @@ document.getElementById("clear").onclick = function() {
 //
 ////////////////////////////////////////////////////////////////////
 
+function addCNP(CNP) {
+    if (checkCNP(CNP) != -1) {
+        let CNParray = JSON.parse(localStorage.getItem("CNP-uri"));
+        CNParray.push(CNP);
+        localStorage.setItem("CNP-uri", JSON.stringify(CNParray));
+    }
+}
+
 document.getElementById("generateCNP").onclick = function() {
         
     let sex = document.getElementById("gen").value;
@@ -253,104 +267,75 @@ document.getElementById("generateCNP").onclick = function() {
     let user_county = document.getElementById("judet").value;
 
     //checkAndCreateRandomValues(sex, year, month, day, user_county);
-    // if(sex == "") {
-    //     sex = generateRandomSex();
-    // }
-    // else if (sex != "M" && sex != "F") {
-    //     return alert("Gen invalid!")
-    // }
-
-    // if(year ==  "") {
-    //     year = generateRandomInputs(1900, 2022);
-    // }
-    // else if (year < 1800 || year > 2022) {
-    //     return alert("An invalid!");
-    // }
-
-    // if(month == "") {
-    //     month = generateRandomInputs(1, 12);
-    // }
-    // else if(month < 1 || month > 12) {
-    //     return alert("Luna invalida!");
-    // }
-
-    // if(day == "") {
-    //     day = generateRandomInputs(1, monthDays[month-1]);
-    // }
-    // else if (day < 1 || day > monthDays[month-1]) {
-    //     return alert("Zi invalida!");
-    // }
-    
-    // if(user_county == "") {
-    //     let countyIndex = generateRandomInputs(1,47);
-    //     user_county = county[countyIndex];
-    // }
-
-    if (county.indexOf(user_county) != -1){
-        user_county = county.indexOf(user_county) + 1;
-    }
-    else return alert("Judet invalid!");
-
-    //checkAndCreateRandomValues(sex, year, month, day, user_county);
     if(sex == "") {
         sex += generateRandomSex();
     }
+   
 
     if(year ==  "") {
-        year = year + generateRandomInputs(1900, 2022);
-        console.log(year);
+        year = generateRandomInputs(1900, 2022).toString();
+        
         
     }
 
     if(month == "") {
         month += generateRandomInputs(1, 12);
     }
-
+    
     if(day == "") {
-        day += generateRandomInputs(1, monthDays[month]);
+        day += generateRandomInputs(1, monthDays[month - 1]);
     }
     
     if(user_county == "") {
         let countyIndex = generateRandomInputs(1,47);
         user_county += county[countyIndex];
     }
+    if (county.indexOf(user_county) != -1){
+        user_county = county.indexOf(user_county) + 1;
+    }
+    else return alert("Judet invalid!");
 
-    console.log(generateRandomInputs(1900, 2022));
-    console.log(sex, year, month, day, user_county);
+
+    
 
     sex = convertAndCheckSex(sex, year).toString();
     year = computeYearGenerate(sex, year).toString();
-    if(month < 10){
-        month = "0" + month.toString();
-    }
-    else month = month.toString();
+
+    if(year < 10) {
+        let  n = "0" + String(year)
+        year = n;
+        //month = "0" + String(month);
+    };
+     
+
+    if(month < 10) {
+        let  n = "0" + String(month)
+        month = n;
+        //month = "0" + String(month);
+    };
+    
     if( day < 10 ) {
-        day = "0" + day.toString();
+        let  n = "0" + String(day)
+        day = n;
     }
-    else day = day.toString();
+    
+    
     if( user_county < 10 ) {
         user_county = "0" + user_county.toString();
     }
-    else user_county = user_county.toString();
+    
 
 
-    let newCNP = sex + year + month + day + user_county + generateRandomInputs(500, 999).toString();
-    //console.log(newCNP);
+    let newCNP = sex + year + month + day + user_county + String(generateRandomInputs(500, 999));
+   
+    
+    let lastDig = checkLast(newCNP, cValidate);
+   
+    newCNP = newCNP + String(lastDig);
+   
+    addCNP(newCNP);
 
-    newCNP = newCNP + checkLast(newCNP, cValidate).toString();
-    // confirm += checkLast(confirm.split(""), cValidate).toString();
-    console.log(newCNP);
-
-    //  console.log(typeof(sex));
-    // console.log(typeof(year));
-    // console.log(typeof(month));
-    // console.log(typeof(day));
-    // console.log(typeof(user_county));
-    // console.log(sex);
-    // console.log(year);
-    // console.log(month);
-    // console.log(day);
-    // console.log(user_county);
+    
 
 }
     
