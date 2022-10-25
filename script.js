@@ -204,29 +204,6 @@ function checkCNP(user_input) {
     else return -1;
 };
 
-function checkAndCreateRandomValues(sex, year, month, day, user_county) {
-    if(sex == "") {
-        sex += generateRandomSex();
-    }
-
-    if(year ==  "") {
-        
-        year += generateRandomInputs(1900, 2022);
-    }
-
-    if(month == "") {
-        month += generateRandomInputs(1, 12);
-    }
-
-    if(day == "") {
-        day += generateRandomInputs(1, monthDays[month]);
-    }
-    
-    if(user_county == "") {
-        let countyIndex = generateRandomInputs(1,47);
-        user_county += county[countyIndex];
-    }
-}
 
 
 /////////////////////////////////////////////////////////////////////
