@@ -250,11 +250,25 @@ document.getElementById("clear").onclick = function() {
 //
 ////////////////////////////////////////////////////////////////////
 
+
+    
+
 function addCNP(CNP) {
     if (checkCNP(CNP) != -1) {
         let CNParray = JSON.parse(localStorage.getItem("CNP-uri"));
-        CNParray.push(CNP);
+        let dataObj = checkCNP(CNP);
+        let CNPobj = {
+            sex: dataObj.sex,
+            year: dataObj.year,
+            month: dataObj.month,
+            day: dataObj.day,
+            county: dataObj.county,
+            cnp: CNP
+        }
+        CNParray.push(CNPobj);
+        
         localStorage.setItem("CNP-uri", JSON.stringify(CNParray));
+        
     }
 }
 
@@ -266,26 +280,20 @@ document.getElementById("generateCNP").onclick = function() {
     let day = document.getElementById("ziua").value;
     let user_county = document.getElementById("judet").value;
 
-    //checkAndCreateRandomValues(sex, year, month, day, user_county);
+    
     if(sex == "") {
         sex += generateRandomSex();
     }
-   
-
     if(year ==  "") {
         year = generateRandomInputs(1900, 2022).toString();
-        
-        
     }
 
     if(month == "") {
         month += generateRandomInputs(1, 12);
     }
-    
     if(day == "") {
         day += generateRandomInputs(1, monthDays[month - 1]);
     }
-    
     if(user_county == "") {
         let countyIndex = generateRandomInputs(1,47);
         user_county += county[countyIndex];
@@ -294,51 +302,60 @@ document.getElementById("generateCNP").onclick = function() {
         user_county = county.indexOf(user_county) + 1;
     }
     else return alert("Judet invalid!");
-
-
     
-
     sex = convertAndCheckSex(sex, year).toString();
     year = computeYearGenerate(sex, year).toString();
 
     if(year < 10) {
-        let  n = "0" + String(year)
-        year = n;
-        //month = "0" + String(month);
+        
+        year = "0" + String(year);
     };
      
-
     if(month < 10) {
-        let  n = "0" + String(month)
-        month = n;
-        //month = "0" + String(month);
+        
+        month = "0" + String(month);
     };
     
     if( day < 10 ) {
-        let  n = "0" + String(day)
-        day = n;
+        
+        day = "0" + String(day);
     }
-    
     
     if( user_county < 10 ) {
         user_county = "0" + user_county.toString();
     }
     
-
+    
 
     let newCNP = sex + year + month + day + user_county + String(generateRandomInputs(500, 999));
    
+    let lastDig = checkLast(newCNP, cValidate).toString();
     
-    let lastDig = checkLast(newCNP, cValidate);
-   
-    newCNP = newCNP + String(lastDig);
-   
-    addCNP(newCNP);
+    newCNP = newCNP + lastDig;
+    
+    console.log(newCNP);
 
+    addCNP(newCNP);
+  
     
 
 }
+
+
+function displayData() {
+    let allData = JSON.parse(localStorage.getItem("CNP-uri"));
+    JSON.stringify(allData);
+    console.log(allData);
+    document.getElementById("storedCNP").innerHTML = allData;
     
+    
+
+}
+
+
+document.getElementById("showCNP").onclick = function() {
+    displayData();
+}
 
     
        
